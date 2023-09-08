@@ -1,0 +1,25 @@
+/* Apply styles to the container of cards */
+.shimmercarousel {
+    display: flex;
+    justify-content: space-between;
+    width: 900px; /* Adjust this value to set the width of the carousel (300px per card * 3 cards) */
+    margin: 0 auto;
+  }
+  
+  /* Apply styles to individual cards */
+  .cardcarousel {
+    width: 300px; /* Set the width of each card */
+    height: 100px; /* Set the height of each card */
+    background-color: #ffffff; /* Optional: Set a background color for the cards */
+    border-radius: 8px; /* Optional: Add border-radius to create rounded corners for the cards */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle box shadow for a card-like appearance */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow effect */
+    border-radius: 5px;
+    font-size: 24px; /* Optional: Adjust font size for the content inside the cards */
+    font-weight: bold; /* Optional: Adjust font weight for the content inside the cards */
+    color: #333; /* Optional: Set text color for the content inside the cards */
+  }
+  

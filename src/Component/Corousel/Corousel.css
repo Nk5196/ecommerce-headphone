@@ -1,0 +1,14 @@
+.corousel {
+    height: 100px;
+     width: 500px;
+}
+
+.alice-carousel{
+    padding: 0px
+}
+.alice-carousel img {
+    width: 380px;
+    height: auto;
+    margin: 10px;
+  
+  }
