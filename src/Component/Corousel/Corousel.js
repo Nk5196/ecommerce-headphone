@@ -39,7 +39,7 @@ const Gallery = () => {
     // Ensure that corouseldata is an array before mapping over it
     if (!Array.isArray(corouseldata)) {
         return null;
-    }
+    } 
 
     const items = corouseldata.map((item, index) => (
         <Box padding={1} key={index} >
