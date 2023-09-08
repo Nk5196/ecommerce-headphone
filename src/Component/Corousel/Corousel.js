@@ -44,7 +44,7 @@ const Gallery = () => {
     const items = corouseldata.map((item, index) => (
         <Box padding={1} key={index} >
             <img
-                src={item.url}
+                src={item.url} 
                 onDragStart={handleDragStart}
                 role="presentation"
             />
