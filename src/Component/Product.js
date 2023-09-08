@@ -1,9 +1,21 @@
-import { Box, Flex, Grid, Heading } from '@chakra-ui/react'
+import { Box, Flex, Grid, Heading, Spacer } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Button } from '@chakra-ui/react'
 import { Card, CardHeader, CardBody, CardFooter, Image, Stack, Text, Divider, ButtonGroup } from '@chakra-ui/react'
 import styled from 'styled-components';
+import { GiHamburgerMenu } from 'react-icons/gi';
 
+
+import {
+    Menu,
+    MenuButton,
+    MenuList,
+    MenuItem,
+    MenuItemOption,
+    MenuGroup,
+    MenuOptionGroup,useMediaQuery,
+    MenuDivider,IconButton
+} from '@chakra-ui/react'
 const TruncatedHeading = styled.h1`
   display: -webkit-box;
   -webkit-line-clamp: 3; /* Limit to 3 lines */
@@ -23,6 +35,8 @@ const TruncatedHeading1 = styled.h1`
 `;
 const Product = () => {
     const [productData, setProductData] = useState([])
+    const [isLargerThanMobile] = useMediaQuery("(min-width: 480px)"); 
+
 
     async function getProductData() {
         const data = await fetch('https://dnyanodaya-backend-1.vercel.app/products')
@@ -38,22 +52,50 @@ const Product = () => {
 
     return (
         <Box m={2} w={'full'}>
-            <Heading ml={2} size={'lg'} display={'flex'} fontWeight={'semibold'}>Our <Heading size={'lg'} ml={1}> Products</Heading></Heading>
+            <Flex ><Heading ml={2} size={'lg'} display={'flex'} fontWeight={'semibold'}>Our <Heading size={'lg'} ml={1}> Products</Heading></Heading>
+              <Spacer/>
+              {!isLargerThanMobile &&<Box mr={3} pr={1}>
+                    <Menu position={'relative'} top={-20}>
+                        <MenuButton
+                            as={IconButton}
+                            aria-label='Options'
+                            icon={<GiHamburgerMenu />}
+                            variant='outline'
+                        />
+                        <MenuList>
+                            <MenuItem  >
+                            Top Earbuds
+                            </MenuItem>
+                            <MenuItem  >
+                            Popularity
+                            </MenuItem>
+                            <MenuItem  >
+                            Price low to high
+                            </MenuItem>
+                            <MenuItem  >
+                            Price high to low
+                            </MenuItem>
+                        </MenuList>
+                    </Menu>
+                </Box>}
+             </Flex>
             <Tabs ml={2} variant='soft-rounded' colorScheme='gray' m={2}>
-                <TabList>
+              {isLargerThanMobile && <TabList>
                     <Tab>Best Sellers</Tab>
                     <Tab>Top Earbuds</Tab>
                     <Tab>Popularity</Tab>
                     <Tab>Price low to high</Tab>
                     <Tab>Price high to low</Tab>
-                </TabList>
+                </TabList> 
+                }
                 <TabPanels>
                     <TabPanel>
-                        <Grid templateColumns='repeat(4, 1fr)' gap={6}>
+                        <Grid templateColumns={['repeat(1, 1fr)', 'repeat(2, 1fr)', 'repeat(4, 1fr)']} gap={6}>
 
-                            {productData.map((item) => <Card w={'250px'} >
-                                <CardBody>
+                            {productData.map((item) => <Card  >
+                                <CardBody >
                                     <Image
+                                         mx="auto"
                                         src={item.imageUrls[0]}
                                         alt='Green double couch with wooden legs'
                                         borderRadius='lg'
@@ -66,17 +108,17 @@ const Product = () => {
                                             {item.description}
                                         </TruncatedHeading1>
                                         <Text color='blue.600' fontSize='2xl'>
-                                        ₹{item.price}
+                                            ₹{item.price}
                                         </Text>
                                     </Stack>
                                 </CardBody>
                                 <Divider />
                                 <CardFooter>
                                     <ButtonGroup spacing='2'>
-                                        <Button variant='solid' colorScheme='blue'>
+                                        <Button variant='solid' size={['sm','md','lg']} colorScheme='blue'>
                                             Buy now
                                         </Button>
-                                        <Button variant='ghost' colorScheme='blue'>
+                                        <Button variant='ghost' size={['sm','md','lg']} colorScheme='blue'>
                                             Add to cart
                                         </Button>
                                     </ButtonGroup>

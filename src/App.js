@@ -7,7 +7,7 @@ import Product from './Component/Product';
 function App() {
   return (<Box >
     <Navbar />
-    <Box p={5}  mx={5}>
+    <Box p={['0','5']}  mx={['0','5']}>
     <Gallery />
     <Product></Product>
     </Box>
