@@ -89,8 +89,8 @@ const Product = () => {
                 variant="outline"
               />
               <MenuList>
-                <MenuItem onClick={() => setSortingOrder('default')}>Top Earbuds</MenuItem>
-                <MenuItem onClick={() => setSortingOrder('default')}>Popularity</MenuItem>
+                <MenuItem onClick={() => setSortingOrder('default')}>All Products</MenuItem>
+                <MenuItem onClick={() => setSortingOrder('rating')}>Top rated</MenuItem>
                 <MenuItem onClick={() => setSortingOrder('lowToHigh')}>Price low to high</MenuItem>
                 <MenuItem onClick={() => setSortingOrder('highToLow')}>Price high to low</MenuItem>
               </MenuList>
