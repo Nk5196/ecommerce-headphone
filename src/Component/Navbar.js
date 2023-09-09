@@ -66,8 +66,7 @@ export default function App() {
             w={["78", "78", "78", "96"]}
             value={text}
             onChange={(e) => setText(e.target.value)}
-          />          <Spacer />
-          <Button >Search</Button> {/* Dispatch action when the button is clicked */}
+          />         
           <Spacer />
           <HStack display="flex" alignItems="end" spacing={1}>
             <HStack
