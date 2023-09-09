@@ -2,7 +2,7 @@ import { Box, Heading } from '@chakra-ui/react';
 import React from 'react';
 
 const cardStyle = {
-  width: '350px',
+  width: '380px',
   height: '500px',
   marginLeft: '50px',
   backgroundColor: '#f0f0f0', // Optional: Set a background color for the cards
@@ -22,12 +22,12 @@ function Shimmer() {
     <Box p={3}>
    <Heading size={'lg'} display={'flex'} mb={5} fontWeight={'semibold'}>Shop By <Heading size={'lg'} ml={1}> lifestyle</Heading></Heading>
 
-    <div className='shimmercarousel' style={{ display: 'flex' , marginBottom:'100px'}}>
+    <Box className='shimmercarousel' display={['none','flex']} >
 
       <div style={cardStyle}></div>
       <div style={cardStyle}></div>
       <div style={cardStyle}></div>
-    </div>
+    </Box>
     </Box>
   );
 }
