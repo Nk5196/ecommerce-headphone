@@ -1,5 +1,7 @@
 import React from "react";
-
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setSearchText } from "./Utils/SearchSlice";
 import {
   chakra,
   Box,
@@ -19,10 +21,17 @@ import {
 } from "@chakra-ui/react";
 import { AiOutlineMenu } from "react-icons/ai";
 
+
 export default function App() {
   const bg = useColorModeValue("white", "gray.800");
   const mobileNav = useDisclosure();
-  const [isLargerThanMobile] = useMediaQuery("(min-width: 480px)"); 
+  const [isLargerThanMobile] = useMediaQuery("(min-width: 480px)");
+  const [text, setText] = useState("")
+  const dispatch = useDispatch();
+ console.log("search",text)
+ 
+    // Dispatch the action with the current searchText value
+    dispatch(setSearchText(text));
 
 
   return (
@@ -45,15 +54,21 @@ export default function App() {
               display="flex"
               alignItems="center"
             >
-               <Img w={10} src='https://res.cloudinary.com/dq4tpe282/image/upload/v1694152421/headphone%20ecom/letter-n-_rkxmzs.jpg'/>
+              <Img w={10} src='https://res.cloudinary.com/dq4tpe282/image/upload/v1694152421/headphone%20ecom/letter-n-_rkxmzs.jpg' />
             </chakra.a>
-           {isLargerThanMobile&& <chakra.h1 fontSize="xl" fontWeight="medium" mt={1} ml="0">
+            {isLargerThanMobile && <chakra.h1 fontSize="xl" fontWeight="medium" mt={1} ml="0">
               -Tune
             </chakra.h1>}
           </Flex>
-          <Spacer/>
-          <Input borderColor={'green.600'} w={['78','78','78','96']}/>
-          <Spacer/>
+          <Spacer />
+          <Input
+            borderColor={"green.600"}
+            w={["78", "78", "78", "96"]}
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+          />          <Spacer />
+          <Button >Search</Button> {/* Dispatch action when the button is clicked */}
+          <Spacer />
           <HStack display="flex" alignItems="end" spacing={1}>
             <HStack
               spacing={1}
@@ -104,7 +119,7 @@ export default function App() {
                 <Button w="full" variant="ghost">
                   Pricing
                 </Button>
-               
+
                 <Button w="full" variant="ghost">
                   Company
                 </Button>

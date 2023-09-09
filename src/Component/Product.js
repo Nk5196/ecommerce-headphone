@@ -24,6 +24,9 @@ import {
 import styled from 'styled-components';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { useMediaQuery } from '@chakra-ui/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ProductList } from './Utils/ProductSlice';
+import { setSearchText } from './Utils/SearchSlice';
 
 const TruncatedHeading = styled.h1`
   display: -webkit-box;
@@ -45,6 +48,36 @@ const Product = () => {
   const [isLargerThanMobile] = useMediaQuery('(min-width: 480px)');
   const [sortingOrder, setSortingOrder] = useState('default');
   const [originalProductData, setOriginalProductData] = useState([]);
+  const dispatch = useDispatch();
+  const searchText = useSelector((state) => state.search.items);
+
+
+  let sortedProductData = [...productData];
+
+
+  console.log("search text", searchText)
+  if (searchText.length > 0) {
+    const searchedproductData = productData.filter(item => {
+      return (
+        item
+          .name
+          .toLowerCase()
+          .includes(searchText.toLowerCase()) ||
+    
+        item
+          .category
+          .toLowerCase()
+          .includes(searchText.toLowerCase()) ||
+          item
+          .brand
+          .toLowerCase()
+          .includes(searchText.toLowerCase())
+      
+      );
+    })
+    sortedProductData = [...searchedproductData]
+  }
+  else sortedProductData = [...originalProductData]
 
   async function getProductData() {
     const data = await fetch('https://dnyanodaya-backend-1.vercel.app/products');
@@ -52,20 +85,20 @@ const Product = () => {
     console.log('product', jsondata);
     setProductData(jsondata);
     setOriginalProductData(jsondata); // Initialize originalProductData
+    dispatch(ProductList(originalProductData))
   }
 
   useEffect(() => {
     getProductData();
   }, []);
 
-  let sortedProductData = [...productData];
 
   if (sortingOrder === 'lowToHigh') {
     sortedProductData.sort((a, b) => a.price - b.price);
   }
   if (sortingOrder === 'rating') {
     sortedProductData.sort((a, b) => b.rating - a.rating);
-  } 
+  }
   else if (sortingOrder === 'highToLow') {
     sortedProductData.sort((a, b) => b.price - a.price);
   }
@@ -146,7 +179,7 @@ const Product = () => {
               ))}
             </Grid>
           </TabPanel>
-          
+
         </TabPanels>
       </Tabs>
     </Box>
