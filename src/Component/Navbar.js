@@ -221,7 +221,7 @@ export default function App() {
             >
               <Button variant="ghost">Features</Button>
               <Button variant="ghost">Pricing</Button>
-              {!isAuthenticated && <Button variant="ghost" onClick={onOpen}>Login</Button>}
+              {!isAuthenticated && <Button variant="ghost" onClick={handleLogin}>Login</Button>}
               {isAuthenticated && <Button variant="ghost" onClick={handleLogout}>Logout</Button>}
             </HStack>
 
