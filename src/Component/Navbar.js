@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchText } from "./Utils/SearchSlice";
 import { Link, Navigate } from 'react-router-dom';
-import { login } from "./Utils/authenticationActions";
+import { login, signup } from "./Utils/authenticationActions";
 
 import {
   chakra,
@@ -21,6 +21,8 @@ import {
   Input,
   useMediaQuery,
   Spacer,
+  Select,
+  Text,
 } from "@chakra-ui/react";
 import { AiOutlineMenu } from "react-icons/ai";
 import {
@@ -34,6 +36,7 @@ import {
 } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom';
 import { logout } from "./Utils/authenticationSlice";
+import { clearError, isSignup } from "./Utils/authenticationSlice";
 
 export default function App() {
   const bg = useColorModeValue("white", "gray.800");
@@ -54,11 +57,18 @@ export default function App() {
   const [loginData, setLoginData] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
 
   const [modalVisible, setModalVisible] = useState(true);
   const isAuthenticated = useSelector((state) => state.authentication.isAuthenticated);
   const userdetails = useSelector((state) => state.authentication.user);
-  console.log("userdetails",isAuthenticated)
+  const errmsg = useSelector((state) => state.authentication.errormsg);
+  const isSignup = useSelector((state) => state.authentication.isSignup);
+
+  console.log("userdetails", isAuthenticated)
+  console.log("isSignup--->>>", isSignup)
+  console.log("err-->", errmsg)
+
 
 
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -68,8 +78,10 @@ export default function App() {
 
 
   function handleLogin() {
+    dispatch(clearError());
 
     try {
+      dispatch(clearError());
       const userData = {
         username,
         password,
@@ -79,32 +91,93 @@ export default function App() {
       dispatch(login(userData));
 
       // Check if the login was successful based on the Redux state
+      // if (isAuthenticated) {
+      //   console.log("successful Auth",isAuthenticated)
+      //   // Redirect to the homepage using useNavigate
 
-      if (isAuthenticated) {
-        console.log("successful Auth")
-          // Redirect to the homepage using useNavigate
-          onClose();
-          navigate('/')
-          onClose();
-        } else {
-        // Handle login failure
-      }
+      //   navigate('/')
+      //   onClose();
+
+      // } 
+
     } catch (error) {
       // Handle errors from the login action
       console.log(error)
     }
   }
 
-  
-    const handleLogout = () => {
-      // Dispatch the clearUserData action
-      dispatch(logout());
-      
-      // Optionally, you can navigate the user to a different page (e.g., the login page) after logout.
-      // You may use react-router-dom's useHistory or navigate function here.
-      // For example: history.push('/login');
-    };
-  
+  useEffect(() => {
+    if (isAuthenticated) {
+      console.log("successful Auth", isAuthenticated)
+      // Redirect to the homepage using useNavigate
+
+      navigate('/')
+      onClose();
+      dispatch(clearError());
+
+
+    }
+  }, [isAuthenticated])
+
+
+  const handleLogout = () => {
+    // Dispatch the clearUserData action
+    dispatch(logout());
+    dispatch(clearError());
+
+    // Optionally, you can navigate the user to a different page (e.g., the login page) after logout.
+    // You may use react-router-dom's useHistory or navigate function here.
+    // For example: history.push('/login');
+  };
+
+
+  // Create state variables for form fields
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+    phone: "",
+    email: "",
+    gender: "",
+    firstName: "",
+    lastName: "",
+  });
+
+  // Handle form input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // You can access the form data in the `formData` object and submit it to your backend or perform any other necessary actions.
+    dispatch(signup(formData))
+
+    if (isSignup == true) {
+      dispatch(clearError());
+      console.log("inside signup")
+      setIsSignupModalOpen(false);
+
+
+    }
+    console.log(formData);
+    // Add your API call or state update logic here.
+  };
+
+
+
+  const openSignupModal = () => {
+    dispatch(clearError());
+    onClose()
+    setIsSignupModalOpen(true);
+  };
+  const closeSignupModal = () => {
+    dispatch(clearError());
+    setIsSignupModalOpen(false);
+  };
+
   return (
     <React.Fragment>
       <chakra.header
@@ -148,8 +221,8 @@ export default function App() {
             >
               <Button variant="ghost">Features</Button>
               <Button variant="ghost">Pricing</Button>
-              {!isAuthenticated&&<Button variant="ghost" onClick={onOpen}>Login</Button>}
-              {isAuthenticated&&<Button variant="ghost" onClick={handleLogout}>Logout</Button>}
+              {!isAuthenticated && <Button variant="ghost" onClick={onOpen}>Login</Button>}
+              {isAuthenticated && <Button variant="ghost" onClick={handleLogout}>Logout</Button>}
             </HStack>
 
             <Box display={{ base: "inline-flex", md: "none" }}>
@@ -192,7 +265,7 @@ export default function App() {
 
                 {/* <Button onClick={onOpen}>Open Modal</Button> */}
 
-                <Button variant={'ghost'} onClick={onOpen}>Login</Button>
+                <Button variant={'ghost'} onClick={handleLogin}>Login</Button>
               </VStack>
             </Box>
           </HStack>
@@ -204,13 +277,18 @@ export default function App() {
           initialFocusRef={initialRef}
           finalFocusRef={finalRef}
           isOpen={isOpen}
-          onClose={onClose}
+          onClose={() => {
+            dispatch(clearError()); // Clear error when the modal is closed
+            onClose();
+          }}
         >
           <ModalOverlay />
           <ModalContent mx={6}>
-            <ModalHeader>Login to your account</ModalHeader>
+            <ModalHeader pb={'2px'}>Login to your account</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
+            {errmsg?.msg &&<Text color={'red.400'} py={1}>{errmsg.msg}</Text>}
+
               <FormControl>
                 <FormLabel>User name</FormLabel>
                 <Input
@@ -233,17 +311,112 @@ export default function App() {
             </ModalBody>
 
             <ModalFooter>
+            <Flex pr={14} mt={-2} gap={2}><p >Not a member?</p><Box color={'blue.400'}><Link p={0} variant={'ghost'} onClick={openSignupModal} >Sign Up</Link></Box></Flex>
+
               <Button onClick={handleLogin} colorScheme='blue' mr={3}>
                 Login
               </Button>
               <Button onClick={onClose}>Cancel</Button>
             </ModalFooter>
-            <Flex p={6} pt={2} gap={2}><p >Not a member?</p><Link p={0} variant={'ghost'}>Sign Up</Link></Flex>
           </ModalContent>
         </Modal>
       </Box>
+
+      <Box>
+        <Modal
+          isOpen={isSignupModalOpen}
+          onClose={closeSignupModal}
+          initialFocusRef={initialRef}
+        >
+          <ModalOverlay />
+          <ModalContent mx={6}>
+            <ModalHeader>Sign Up</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody pb={6}>
+              {errmsg   && <Text color={'red.400'} pb={1}>Error in Sign up</Text>}
+
+              {/* Add your signup form fields here */}
+              <FormControl>
+                <FormLabel>First Name</FormLabel>
+                <Input
+                  type="text"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleInputChange}
+                  required
+                />
+              </FormControl>
+
+              <FormControl>
+                <FormLabel>Last Name</FormLabel>
+                <Input
+                  type="text"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleInputChange}
+                  required
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel>Username</FormLabel>
+                <Input
+                  type="text"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleInputChange}
+                  required
+                />
+              </FormControl>
+
+              <FormControl>
+                <FormLabel>Password</FormLabel>
+                <Input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  required
+                />
+              </FormControl>
+
+              <FormControl>
+                <FormLabel>Phone</FormLabel>
+                <Input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  required
+                />
+              </FormControl>
+
+              <FormControl>
+                <FormLabel>Email</FormLabel>
+                <Input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                />
+              </FormControl>
+
+
+
+              {/* Add more form fields for password, name, etc. */}
+            </ModalBody>
+            <ModalFooter>
+              <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
+                Sign Up
+              </Button>
+              <Button onClick={closeSignupModal}>Cancel</Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+
+      </Box>
+
+
     </React.Fragment>
   );
 }
-
-

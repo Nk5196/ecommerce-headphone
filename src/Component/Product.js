@@ -93,6 +93,7 @@ const Product = () => {
   }, []);
 
 
+
   if (sortingOrder === 'lowToHigh') {
     sortedProductData.sort((a, b) => a.price - b.price);
   }
@@ -101,6 +102,10 @@ const Product = () => {
   }
   else if (sortingOrder === 'highToLow') {
     sortedProductData.sort((a, b) => b.price - a.price);
+  }
+
+  const handleAddCart = (item) =>{
+ console.log(item)
   }
 
   return (
@@ -170,7 +175,7 @@ const Product = () => {
                       <Button variant="solid" size={['sm', 'md', 'lg']} colorScheme="blue">
                         Buy now
                       </Button>
-                      <Button variant="ghost" size={['sm', 'md', 'lg']} colorScheme="blue">
+                      <Button variant="ghost" size={['sm', 'md', 'lg']} colorScheme="blue" onClick={handleAddCart(item)}>
                         Add to cart
                       </Button>
                     </ButtonGroup>
