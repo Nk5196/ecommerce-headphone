@@ -6,7 +6,7 @@ import axios from 'axios';
 export const signup = (userData) => async (dispatch) => {
 
     try {
-        const response = await axios.post('hhttps://dnyanodaya-backend-1.vercel.app/user/signup', userData);
+        const response = await axios.post('https://dnyanodaya-backend-1.vercel.app/user/signup', userData);
         dispatch(setToken(response.data.token));
         dispatch(setUser(response.data.user));
         dispatch(isSignup(true))
