@@ -6,7 +6,7 @@ import axios from 'axios';
 export const signup = (userData) => async (dispatch) => {
 
     try {
-        const response = await axios.post('https://dnyanodaya-backend-1.vercel.app/user/signup', userData);
+        const response = await axios.post('https://dnyanodaya-backend-1.vercel.app/ntune-user/signup', userData);
         dispatch(setToken(response.data.token));
         dispatch(setUser(response.data.user));
         dispatch(isSignup(true))
@@ -23,7 +23,7 @@ export const login = (userData) => async (dispatch) => {
     const username = userData.username
     const password = userData.password
     try {
-        const response = await fetch('https://dnyanodaya-backend-1.vercel.app/user/login', {
+        const response = await fetch('https://dnyanodaya-backend-1.vercel.app/ntune-user/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
