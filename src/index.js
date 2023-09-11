@@ -9,6 +9,8 @@ import { Provider } from 'react-redux';
 import store from './Component/Utils/Store'; // Import your Redux store
 import Homepage from './Component/Homepage';
 import Login from './Component/Login';
+import ProductDetailPage from './Component/ProductDetailPage';
+import CartPage from './Component/CartPage';
 
 
 const appRouter = createBrowserRouter([{
@@ -20,8 +22,12 @@ const appRouter = createBrowserRouter([{
       element: <Homepage />
     },
     {
-      path: "/login",
-      element: <Login />
+      path: "/product-detail/:id",
+      element: <ProductDetailPage />
+    },
+    {
+      path: "/cart",
+      element: <CartPage />
     },
    
   ]

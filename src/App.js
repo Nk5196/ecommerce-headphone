@@ -4,6 +4,7 @@ import Navbar from './Component/Navbar'
 import Product from './Component/Product';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
+import ProductDetailPage from './Component/ProductDetailPage';
 
 
 function App() {

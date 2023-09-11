@@ -65,7 +65,7 @@ export default function App() {
   const errmsg = useSelector((state) => state.authentication.errormsg);
   const isSignup = useSelector((state) => state.authentication.isSignup);
 
-  console.log("userdetails", isAuthenticated)
+  console.log("userdetails", userdetails)
   console.log("isSignup--->>>", isSignup)
   console.log("err-->", errmsg)
 
@@ -90,7 +90,7 @@ export default function App() {
       console.log(userData)
       // Dispatch the login action
       dispatch(login(userData));
-
+      
       // Check if the login was successful based on the Redux state
       // if (isAuthenticated) {
       //   console.log("successful Auth",isAuthenticated)
@@ -192,11 +192,11 @@ export default function App() {
         zIndex={500}
       >
         <Flex alignItems="center" justifyContent="space-between" mx="auto">
-         
-            <Link to="/">
+
+          <Link to="/">
             <Flex >
               <chakra.a
-                 
+
                 title="Choc Home Page"
                 display="flex"
                 alignItems="center"
@@ -206,8 +206,8 @@ export default function App() {
               {isLargerThanMobile && <chakra.h1 fontSize="xl" fontWeight="medium" mt={1} ml="0">
                 -Tune
               </chakra.h1>}
-          </Flex>
-            </Link>
+            </Flex>
+          </Link>
           <Spacer />
           <Input
             borderColor={"green.600"}
@@ -224,7 +224,7 @@ export default function App() {
               display={{ base: "none", md: "inline-flex" }}
             >
               <Button variant="ghost">Features</Button>
-              <Button variant="ghost">Pricing</Button>
+              <Link to='/cart'><Button variant="ghost">Cart</Button></Link>
               {!isAuthenticated && <Button variant="ghost" onClick={handleLogin}>Login</Button>}
               {isAuthenticated && <Button variant="ghost" onClick={handleLogout}>Logout</Button>}
             </HStack>
@@ -263,14 +263,13 @@ export default function App() {
                 <Button w="full" variant="ghost">
                   Features
                 </Button>
-                <Button w="full" variant="ghost">
-                  Pricing
-                </Button>
+                <Link to='/cart'><Button variant="ghost">Cart</Button></Link>
+
 
                 {/* <Button onClick={onOpen}>Open Modal</Button> */}
 
-                <Button variant={'ghost'} onClick={handleLogin}>Login</Button>
-              </VStack>
+                {!isAuthenticated && <Button variant="ghost" onClick={handleLogin}>Login</Button>}
+              {isAuthenticated && <Button variant="ghost" onClick={handleLogout}>Logout</Button>}              </VStack>
             </Box>
           </HStack>
         </Flex>
@@ -291,7 +290,6 @@ export default function App() {
             <ModalHeader pb={'2px'}>Login to your account</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
-              {errmsg?.msg && <Text color={'red.400'} py={1}>{errmsg.msg}</Text>}
 
               <FormControl>
                 <FormLabel>User name</FormLabel>
