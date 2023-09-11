@@ -23,7 +23,7 @@ export const login = (userData) => async (dispatch) => {
     const username = userData.username
     const password = userData.password
     try {
-        const response = await fetch('https://dnyanodaya-backend-1.vercel.app/ntune-user/login', {
+        const response = await fetch('http://localhost:3001/ntune-user/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

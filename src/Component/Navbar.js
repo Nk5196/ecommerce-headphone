@@ -192,19 +192,22 @@ export default function App() {
         zIndex={500}
       >
         <Flex alignItems="center" justifyContent="space-between" mx="auto">
-          <Flex>
-            <chakra.a
-              href="/"
-              title="Choc Home Page"
-              display="flex"
-              alignItems="center"
-            >
-              <Img w={10} src='https://res.cloudinary.com/dq4tpe282/image/upload/v1694152421/headphone%20ecom/letter-n-_rkxmzs.jpg' />
-            </chakra.a>
-            {isLargerThanMobile && <chakra.h1 fontSize="xl" fontWeight="medium" mt={1} ml="0">
-              -Tune
-            </chakra.h1>}
+         
+            <Link to="/">
+            <Flex >
+              <chakra.a
+                 
+                title="Choc Home Page"
+                display="flex"
+                alignItems="center"
+              >
+                <Img w={10} src='https://res.cloudinary.com/dq4tpe282/image/upload/v1694152421/headphone%20ecom/letter-n-_rkxmzs.jpg' />
+              </chakra.a>
+              {isLargerThanMobile && <chakra.h1 fontSize="xl" fontWeight="medium" mt={1} ml="0">
+                -Tune
+              </chakra.h1>}
           </Flex>
+            </Link>
           <Spacer />
           <Input
             borderColor={"green.600"}
@@ -314,11 +317,11 @@ export default function App() {
             <ModalFooter>
               {isLargerThanMobile ?? <Flex pr={14} mt={-2} gap={2}><p >Not a member?</p><Box color={'blue.400'}><Link p={0} variant={'ghost'} onClick={openSignupModal} >Sign Up</Link></Box></Flex>
               }
-             <Box pr={4}><p >Not a member?</p><Box color={'blue.400'}><Link p={0} variant={'ghost'} onClick={openSignupModal} >Sign Up</Link></Box></Box> 
-                <Button onClick={handleLogin} colorScheme='blue' mr={3}>
-                  Login
-                </Button>
-                <Button onClick={onClose}>Cancel</Button>
+              <Box pr={4}><p >Not a member?</p><Box color={'blue.400'}><Link p={0} variant={'ghost'} onClick={openSignupModal} >Sign Up</Link></Box></Box>
+              <Button onClick={handleLogin} colorScheme='blue' mr={3}>
+                Login
+              </Button>
+              <Button onClick={onClose}>Cancel</Button>
             </ModalFooter>
           </ModalContent>
         </Modal>
