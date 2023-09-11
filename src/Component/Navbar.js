@@ -79,6 +79,7 @@ export default function App() {
 
   function handleLogin() {
     dispatch(clearError());
+    onOpen()
 
     try {
       dispatch(clearError());
