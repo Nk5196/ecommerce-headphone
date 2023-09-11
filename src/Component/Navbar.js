@@ -288,7 +288,7 @@ export default function App() {
             <ModalHeader pb={'2px'}>Login to your account</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
-            {errmsg?.msg &&<Text color={'red.400'} py={1}>{errmsg.msg}</Text>}
+              {errmsg?.msg && <Text color={'red.400'} py={1}>{errmsg.msg}</Text>}
 
               <FormControl>
                 <FormLabel>User name</FormLabel>
@@ -312,12 +312,13 @@ export default function App() {
             </ModalBody>
 
             <ModalFooter>
-            <Flex pr={14} mt={-2} gap={2}><p >Not a member?</p><Box color={'blue.400'}><Link p={0} variant={'ghost'} onClick={openSignupModal} >Sign Up</Link></Box></Flex>
-
-              <Button onClick={handleLogin} colorScheme='blue' mr={3}>
-                Login
-              </Button>
-              <Button onClick={onClose}>Cancel</Button>
+              {isLargerThanMobile ?? <Flex pr={14} mt={-2} gap={2}><p >Not a member?</p><Box color={'blue.400'}><Link p={0} variant={'ghost'} onClick={openSignupModal} >Sign Up</Link></Box></Flex>
+              }
+             <Box pr={4}><p >Not a member?</p><Box color={'blue.400'}><Link p={0} variant={'ghost'} onClick={openSignupModal} >Sign Up</Link></Box></Box> 
+                <Button onClick={handleLogin} colorScheme='blue' mr={3}>
+                  Login
+                </Button>
+                <Button onClick={onClose}>Cancel</Button>
             </ModalFooter>
           </ModalContent>
         </Modal>
@@ -334,7 +335,7 @@ export default function App() {
             <ModalHeader>Sign Up</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
-              {errmsg   && <Text color={'red.400'} pb={1}>Error in Sign up</Text>}
+              {errmsg && <Text color={'red.400'} pb={1}>Error in Sign up</Text>}
 
               {/* Add your signup form fields here */}
               <FormControl>
