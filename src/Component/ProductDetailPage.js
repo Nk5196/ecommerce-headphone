@@ -41,6 +41,16 @@ const ProductDetailPage = () => {
     // }
 
     const handleAddCart = (productId) => {
+        if (!userId) {
+            toast({
+              title: 'Please Login First',
+              description: 'Login to add products to your cart',
+              status: 'error', // Use 'error' for indicating an error
+              duration: 3000, // Duration in milliseconds
+              isClosable: true,
+            });
+            return; // Exit the function early if there is no user
+          }
         // Send a POST request to add a product to the cart
         axios.post('https://dnyanodaya-backend-1.vercel.app/api/cart/add-to-cart', {
             userId, // Use the user ID from your state or authentication
