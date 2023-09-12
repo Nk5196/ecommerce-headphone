@@ -223,7 +223,6 @@ export default function App() {
               color="brand.500"
               display={{ base: "none", md: "inline-flex" }}
             >
-              <Button variant="ghost">Features</Button>
               <Link to='/cart'><Button variant="ghost">Cart</Button></Link>
               {!isAuthenticated && <Button variant="ghost" onClick={handleLogin}>Login</Button>}
               {isAuthenticated && <Button variant="ghost" onClick={handleLogout}>Logout</Button>}
@@ -260,9 +259,7 @@ export default function App() {
                   onClick={mobileNav.onClose}
                 />
 
-                <Button w="full" variant="ghost">
-                  Features
-                </Button>
+               
                 <Link to='/cart'><Button variant="ghost">Cart</Button></Link>
 
 
